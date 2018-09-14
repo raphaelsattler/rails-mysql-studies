@@ -50,4 +50,3 @@ test:
 production:
   <<: *default
   database: buy-here_production
-  password: <%= ENV['BUY-HERE_DATABASE_PASSWORD'] %>
