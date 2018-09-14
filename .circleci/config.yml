@@ -8,7 +8,6 @@ jobs:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.1-node
-       - image: tkuchiki/delayed-mysql
          environment:
            MYSQL_ALLOW_EMPTY_PASSWORD: yes
            MYSQL_ROOT_PASSWORD: ''
@@ -24,12 +23,11 @@ jobs:
           name: Bundle install
           command: bundle install
       - run:
-          name: Wait for DB
-          # preinstalled in circleci/* docker image
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+          name: Update install
+          command: sudo apt-get update
       - run:
-          name: MySQL version
-          command: bundle exec ruby mysql_version.rb
+          name: MySQL install
+          command: sudo apt-get install mysql-server
       # Download and cache dependencies
       - restore_cache:
           keys:
