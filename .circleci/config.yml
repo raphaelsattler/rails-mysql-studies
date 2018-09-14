@@ -16,7 +16,6 @@ jobs:
           - MYSQL_ROOT_HOST=%
     steps:
       - checkout
-      - run: mysql -h 127.0.0.1 -u root circle_test
       # Download and cache dependencies
       - restore_cache:
           keys:
