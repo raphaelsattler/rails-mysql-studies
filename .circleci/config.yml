@@ -8,10 +8,10 @@ jobs:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.1-node
-       - image: circleci/mysql:5.7.23-ram
+       - image: circleci/mysql:5.7.23
          environment:
-          - MYSQL_ROOT_PASSWORD=buy-here
-          - MYSQL_DATABASE=buy-here_test
+      - MYSQL_ROOT_PASSWORD=ubuntu
+      - MYSQL_DATABASE=circle_test
        # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
