@@ -10,8 +10,8 @@ jobs:
        - image: circleci/ruby:2.5.1-node
        - image: circleci/mysql:5.7.23
          environment:
-      - MYSQL_ROOT_PASSWORD=ubuntu
-      - MYSQL_DATABASE=circle_test
+          - MYSQL_ROOT_PASSWORD=ubuntu
+          - MYSQL_DATABASE=circle_test
        # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
