@@ -25,7 +25,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  username: root
+  username: ubuntu
   password: ubuntu
   database: buy-here_test
   host: localhost
