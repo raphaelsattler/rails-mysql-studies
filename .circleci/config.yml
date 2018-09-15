@@ -28,7 +28,7 @@ jobs:
     - run:
         name: Create non-admin user
         command: |
-          sudo mysql -u root -e "CREATE user ubuntu IDENTIFIED BY 'ubuntu';"
+          sudo mysql -u root -e "CREATE user ubuntu@localhost IDENTIFIED BY 'ubuntu';"
 
     - run:
         name: Set user permissions
