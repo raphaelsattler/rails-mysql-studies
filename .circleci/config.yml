@@ -27,6 +27,12 @@ jobs:
         name: MySQL start
         command: sudo service mysql start
 
+      - run:
+          name: Create non-admin user
+          command: |
+            sudo mysql -u root -e "CREATE user ubuntu IDENTIFIED BY 'ubuntu';"
+
+
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "Gemfile.lock" }}
