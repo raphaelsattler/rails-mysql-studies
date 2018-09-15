@@ -10,6 +10,9 @@ jobs:
    steps:
    - checkout
    - run:
+       name: Create master key file
+       command: echo "$MASTER_KEY" >> config/master.key
+   - run:
        name: Bundle install
        command: bundle install
    - run:
