@@ -13,6 +13,8 @@ jobs:
            MYSQL_ALLOW_EMPTY_PASSWORD: yes
            MYSQL_ROOT_PASSWORD: ''
            MYSQL_DATABASE: circleci
+           MYSQL_DATABASE_PORT: 3306
+           MYSQL_DATABASE_HOST: localhost
 
       
       # Specify service dependencies here if necessary
