@@ -33,7 +33,12 @@ jobs:
     - run:
         name: Set user permissions
         command: |
-          sudo mysql -u root -e "GRANT ALL PRIVILEGES ON * . * TO 'ubuntu'@'localhost';"
+          sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'localhost' WITH GRANT OPTION"
+
+    - run:
+        name: Set user permissions
+        command: |
+          sudo mysql -u root -e "FLUSH PRIVILEGES"
 
     - restore_cache:
         keys:
