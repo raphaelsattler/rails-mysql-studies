@@ -4,11 +4,9 @@ jobs:
     docker:
     - image: circleci/ruby:2.5.1-node
       environment:
-        - MYSQL_DATABASE='buy-here_test'
-        - MYSQL_ROOT_PASSWORD='ubuntu'
-        - MYSQL_ROOT_HOST=%
-        - DB_HOST=127.0.0.1
-        - DB_PORT=3306
+        MYSQL_DATABASE: 'buy-here_test'
+        MYSQL_ROOT_PASSWORD: 'ubuntu'
+        MYSQL_ROOT_HOST: %
     steps:
     - checkout
     - run:
@@ -21,11 +19,11 @@ jobs:
         name: MySQL install
         command: sudo apt-get install mysql-server
         environment:
-          - MYSQL_DATABASE='buy-here_test'
-          - MYSQL_ROOT_PASSWORD='ubuntu'
-          - MYSQL_ROOT_HOST=%
-          - DB_HOST=127.0.0.1
-          - DB_PORT=3306
+          MYSQL_DATABASE: 'buy-here_test'
+          MYSQL_ROOT_PASSWORD: 'ubuntu'
+          MYSQL_ROOT_HOST: %
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
     - run:
         name: MySQL start
         command: sudo service mysql start
