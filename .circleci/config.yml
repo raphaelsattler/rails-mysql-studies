@@ -4,8 +4,6 @@ jobs:
     docker:
     - image: circleci/ruby:2.5.1-node
       environment:
-        MYSQL_ALLOW_EMPTY_PASSWORD: true
-        MYSQL_ROOT_PASSWORD: ''
         MYSQL_DATABASE: buy-here_test
         MYSQL_ROOT_PASSWORD: ubuntu
     steps:
