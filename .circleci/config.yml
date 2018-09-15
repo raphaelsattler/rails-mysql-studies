@@ -33,11 +33,11 @@ jobs:
    - run:
        name: Create non-admin user
        command: |
-         sudo mysql -u root -e "CREATE user MYSQL_USER@localhost IDENTIFIED BY 'MYSQL_PASSWORD';"
+         sudo mysql -u root -e "CREATE user " + MYSQL_USER + "@localhost IDENTIFIED BY '" + MYSQL_PASSWORD + "';"
    - run:
        name: Set user permissions
        command: |
-         sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'MYSQL_USER'@'localhost' WITH GRANT OPTION"
+         sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '" + MYSQL_USER + "'@'localhost' WITH GRANT OPTION"
 
    - run:
       name: Set user permissions
