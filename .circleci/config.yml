@@ -30,16 +30,6 @@ jobs:
         command: |
           sudo mysql -u root -e "CREATE user ubuntu@localhost IDENTIFIED BY 'ubuntu';"
 
-    - run:
-        name: Set user permissions
-        command: |
-          sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'localhost' WITH GRANT OPTION"
-
-    - run:
-        name: Set user permissions
-        command: |
-          sudo mysql -u root -e "FLUSH PRIVILEGES"
-
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "Gemfile.lock" }}
