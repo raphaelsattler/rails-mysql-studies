@@ -17,7 +17,7 @@ jobs:
         command: sudo apt-get update
     - run:
         name: MySQL install
-        command: sudo apt-get install mysql-server
+        command: sudo apt-get install mysql-server mysql-client
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "Gemfile.lock" }}
