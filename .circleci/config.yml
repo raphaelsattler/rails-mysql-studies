@@ -8,6 +8,9 @@ jobs:
     docker:
       # specify the version you desire here
        - image: circleci/ruby:2.5.1-node-browsers
+         environment:
+           MYSQL_DATABASE_PORT: 3306
+           MYSQL_DATABASE_HOST: localhost
        - image: tkuchiki/delayed-mysql
          environment:
            MYSQL_ALLOW_EMPTY_PASSWORD: yes
@@ -15,6 +18,7 @@ jobs:
            MYSQL_DATABASE: circleci
            MYSQL_DATABASE_PORT: 3306
            MYSQL_DATABASE_HOST: localhost
+
 
       
       # Specify service dependencies here if necessary
