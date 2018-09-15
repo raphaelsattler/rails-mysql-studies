@@ -6,6 +6,8 @@ jobs:
      environment:
        MYSQL_DATABASE: 'buy-here_test'
        MYSQL_ROOT_PASSWORD: 'ubuntu'
+       MYSQL_USER: <%= Rails.application.credentials[Rails.env.to_sym][:database_username] %>
+       MYSQL_PASSWORD: <%= Rails.application.credentials[Rails.env.to_sym][:database_password0] %>
 
    steps:
    - checkout
@@ -31,11 +33,11 @@ jobs:
    - run:
        name: Create non-admin user
        command: |
-         sudo mysql -u root -e "CREATE user ubuntu@localhost IDENTIFIED BY 'ubuntu';"
+         sudo mysql -u root -e "CREATE user MYSQL_USER@localhost IDENTIFIED BY 'MYSQL_PASSWORD';"
    - run:
        name: Set user permissions
        command: |
-         sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'localhost' WITH GRANT OPTION"
+         sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'MYSQL_USER'@'localhost' WITH GRANT OPTION"
 
    - run:
       name: Set user permissions
