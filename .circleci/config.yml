@@ -1,67 +1,76 @@
 version: 2
 jobs:
-  build:
-    docker:
-    - image: circleci/ruby:2.5.1-node
-      environment:
-        MYSQL_DATABASE: 'buy-here_test'
-        MYSQL_ROOT_PASSWORD: 'ubuntu'
+ build:
+   docker:
+   - image: circleci/ruby:2.5.1-node
+     environment:
+       MYSQL_DATABASE: 'buy-here_test'
+       MYSQL_ROOT_PASSWORD: 'ubuntu'
 
-    steps:
-    - checkout
-    - run:
-        name: Bundle install
-        command: bundle install
-    - run:
-        name: Update install
-        command: sudo apt-get update
-    - run:
-        name: MySQL install
-        command: sudo apt-get install mysql-server
-        environment:
-          MYSQL_DATABASE: 'buy-here_test'
-          MYSQL_ROOT_PASSWORD: 'ubuntu'
-    - run:
-        name: MySQL start
-        command: sudo service mysql start
+   steps:
+   - checkout
+   - run:
+       name: Bundle install
+       command: bundle install
+   - run:
+       name: Update install
+       command: sudo apt-get update
+   - run:
+       name: MySQL install
+       command: sudo apt-get install mysql-server
+       environment:
+         MYSQL_DATABASE: 'buy-here_test'
+         MYSQL_ROOT_PASSWORD: 'ubuntu'
+   - run:
+       name: MySQL start
+       command: sudo service mysql start
 
-    - run:
-        name: Create non-admin user
-        command: |
-          sudo mysql -u root -e "CREATE USER 'ubuntu'@'localhost' IDENTIFIED BY 'ubuntu';"
+   - run:
+       name: Create non-admin user
+       command: |
+         sudo mysql -u root -e "CREATE user ubuntu@localhost IDENTIFIED BY 'ubuntu';"
+   - run:
+       name: Set user permissions
+       command: |
+         sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'localhost' WITH GRANT OPTION"
 
-    - restore_cache:
-        keys:
-        - v1-dependencies-{{ checksum "Gemfile.lock" }}
-        - v1-dependencies-
-    - run:
-        name: install dependencies
-        command: |
-          bundle install --jobs=4 --retry=3 --path vendor/bundle
-    - save_cache:
-        paths:
-        - ./vendor/bundle
-        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-    - run: bundle exec rake db:create
-    - run: bundle exec rake db:schema:load
-    - run:
-        name: run tests
-        command: |
-          mkdir /tmp/test-results
-          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+   - run:
+      name: Set user permissions
+      command: |
+        sudo mysql -u root -e "FLUSH PRIVILEGES"
 
-          bundle exec rspec --format progress \
-                          --format RspecJunitFormatter \
-                          --out /tmp/test-results/rspec.xml \
-                          --format progress \
-                          $TEST_FILES
-    - store_test_results:
-        path: /tmp/test-results
-    - store_artifacts:
-        path: /tmp/test-results
-        destination: test-results
+   - restore_cache:
+       keys:
+       - v1-dependencies-{{ checksum "Gemfile.lock" }}
+       - v1-dependencies-
+   - run:
+       name: install dependencies
+       command: |
+         bundle install --jobs=4 --retry=3 --path vendor/bundle
+   - save_cache:
+       paths:
+       - ./vendor/bundle
+       key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+   - run: bundle exec rake db:create
+   - run: bundle exec rake db:schema:load
+   - run:
+       name: run tests
+       command: |
+         mkdir /tmp/test-results
+         TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+
+         bundle exec rspec --format progress \
+                         --format RspecJunitFormatter \
+                         --out /tmp/test-results/rspec.xml \
+                         --format progress \
+                         $TEST_FILES
+   - store_test_results:
+       path: /tmp/test-results
+   - store_artifacts:
+       path: /tmp/test-results
+       destination: test-results
 workflows:
-  version: 2
-  workflow:
-    jobs:
-    - build
+ version: 2
+ workflow:
+   jobs:
+   - build
