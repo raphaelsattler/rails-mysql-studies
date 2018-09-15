@@ -6,7 +6,6 @@ jobs:
       environment:
         MYSQL_DATABASE: 'buy-here_test'
         MYSQL_ROOT_PASSWORD: 'ubuntu'
-        MYSQL_ROOT_HOST: %
     steps:
     - checkout
     - run:
